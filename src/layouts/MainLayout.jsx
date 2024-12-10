@@ -1,12 +1,20 @@
 import { Outlet } from "react-router"
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
 
 
 function MainLayout() {
   return (
-    <div>
-      <div>Navbar</div>
+    <div className="container mx-auto" >
+      <div>
+        <Navbar/>
+      </div>
+      <div className="min-h-screen">
       <Outlet/>
-      <div>Footer</div>
+      </div>
+      <div>
+        <Footer/>
+      </div>
     </div>
   )
 }
