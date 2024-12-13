@@ -1,16 +1,18 @@
 
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
-  // eslint-disable-next-line no-unused-vars
-  const {CreateUser} = useAuth();
-  // eslint-disable-next-line no-unused-vars
-  const {register,handleSubmit,watch,formState:{errors},} = useForm()
+  
+  const {Login} = useAuth();
+  const navigate = useNavigate()
+ 
+  const {register,handleSubmit,formState:{errors},} = useForm()
   const onSub =(data)=>{
-    console.log(data)
+    Login(data.email, data.password);
+    navigate("/")
   }
   return (
     <div className="min-h-screen hero bg-base-200">

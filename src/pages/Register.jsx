@@ -3,16 +3,21 @@
 import { Link } from 'react-router';
 import useAuth from './../hooks/useAuth';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 
 const Register = () => {
   
   const {CreateUser} = useAuth();
-  // eslint-disable-next-line no-unused-vars
-  const {register,handleSubmit,watch,formState:{errors},} = useForm()
+  const {register,handleSubmit,watch,formState:{errors},} = useForm();
+  const navigate = useNavigate();
   const onSub =(data)=>{
+   
     CreateUser(data.email, data.password);
+    navigate('/')
+    
   };
+  
   return (
     <div className="min-h-screen hero bg-base-200">
   <div className="flex-col hero-content lg:flex-row-reverse">
