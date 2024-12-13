@@ -1,7 +1,9 @@
-import { createUserWithEmailAndPassword, getAuth,  } from "firebase/auth/web-extension";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth/web-extension";
 import { createContext, useEffect, useState } from "react"
 import { app } from "../firebase/firebase.config";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth/cordova";
+import { GoogleAuthProvider, onAuthStateChanged, 
+  signInWithEmailAndPassword, signOut  } from "firebase/auth/cordova";
+import axios from "axios";
 
 
 
@@ -30,15 +32,27 @@ const AuthProvider = ({children}) => {
     };
 
     const GoogleLogin =()=>{
-        // eslint-disable-next-line no-undef
-        return signInWithPopup(auth,googleProvider)
+       
+        return signInWithPopup(auth, googleProvider)
     };
    
     useEffect(()=>{
       const unsubscribe = onAuthStateChanged(auth, currentUser =>{
         setUser(currentUser);
-        setLoading(false)
-        console.log(currentUser);
+        if(currentUser){
+          axios.post(`http://localhost:4000/authentication`, {
+            email:currentUser.email
+          }).then((data)=>{
+            if(data.data){
+              localStorage.setItem('access-token', data?.data?.token)
+              setLoading(false);
+            }
+          })
+        }
+        else{
+          localStorage.removeItem('access-token');
+          setLoading(false);
+        }
       });
       return (
         ()=>{

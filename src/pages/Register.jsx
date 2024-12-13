@@ -1,9 +1,8 @@
-
-
 import { Link } from 'react-router';
 import useAuth from './../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import GoogleLogin from '../components/login-registration/GoogleLogin';
 
 
 const Register = () => {
@@ -62,9 +61,24 @@ const Register = () => {
           } />
           {errors.confirmPassword && (<p className='text-sm font-light text-red-500'>Both Password Must Match</p>)}
         </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Role</span>
+          </label>
+          <select className="w-full max-w-xs select select-bordered"
+          {...register("role", {required:true})}>
+  <option value='buyer'>Buyer</option>
+  <option value='seller'>Seller</option>
+</select>
+{errors.role && <p className='text-sm font-light text-red-500'>You Have Must Select a Role</p> }
+          
+        </div>
         <div className="mt-6 form-control">
           <button className="btn btn-primary" type='submit'>Register</button>
         </div>
+      
+          <GoogleLogin/>
+        
       <p className='my-4 text-sm font-light'>Allready Have an account? Please <Link to={"/login"}className='text-primary'>Login Now</Link></p>
       </form>
       
