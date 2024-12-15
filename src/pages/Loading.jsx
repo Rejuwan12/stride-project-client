@@ -1,5 +1,6 @@
+import { GridLoader } from "react-spinners"
 
-import GridLoader from './../../node_modules/react-spinners/cjs/GridLoader.d';
+
 
 const Loading = () => {
   return (
