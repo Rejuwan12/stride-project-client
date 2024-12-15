@@ -33,6 +33,7 @@ const AuthProvider = ({children}) => {
 
     const GoogleLogin =()=>{
        
+        // eslint-disable-next-line no-undef
         return signInWithPopup(auth, googleProvider)
     };
    
