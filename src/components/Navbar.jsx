@@ -5,6 +5,14 @@ import UserDropdown from "./UserDropdown";
 
 const Navbar = () => {
   const {user} = useAuth();
+  const navLinks = <>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/products">Products</NavLink>
+      <NavLink to="/about">About</NavLink>
+      <NavLink to="/contact-us">Contact Us</NavLink>
+  </>
+    
+  
   return (
     <div className="navbar bg-base-200">
   <div className="navbar-start">
@@ -25,27 +33,15 @@ const Navbar = () => {
       </div>
       <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a>Item 3</a></li>
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 gap-2 shadow">
+        {navLinks}
       </ul>
     </div>
     <h2 className="text-xl btn btn-ghost">HABLU Gadget</h2>
   </div>
   <div className="hidden navbar-center lg:flex">
-    <ul className="px-1 menu menu-horizontal">
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/products">Products</NavLink>
-      <NavLink to="/about">About</NavLink>
-      <NavLink to="/contact-us">Contact Us</NavLink>
-      
+    <ul className="gap-2 px-1 menu menu-horizontal ">
+      {navLinks}
     </ul>
   </div>
   {  user ? <div className="navbar-end"> <UserDropdown/> </div> : <div className="navbar-end">
