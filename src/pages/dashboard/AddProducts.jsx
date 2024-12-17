@@ -1,14 +1,46 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 
 const AddProducts = () => {
  
   const {register,handleSubmit,formState:{errors},} = useForm();
- 
+ const {user} = useAuth();
   
   const onSub =(data)=>{
-    console.log(data)
+    const title = data.title;
+    const brand = parseFloat(data.brand);
+    const price = parseFloat(data.price);
+    const stock = data.stock;
+    const imageURL = data.imageURL;
+    const category = data.category;
+    const description = data.description;
+    const sellerEmail = user?.email;
+
+    const product ={
+      title,imageURL,
+      brand, price, stock, category,description,sellerEmail
+    };
+    const token = localStorage.getItem('access-token');
+
+    axios.post('http://localhost:4000/add-products', product,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      if(res.data.insertedId){
+        Swal.fire({
+          title: "Wow! Added!",
+          text: "Product Added Success",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    });
+    
   };
   return (
     <div className="w-full h-full">
@@ -70,6 +102,17 @@ const AddProducts = () => {
           {errors.category && <p className='text-sm font-light text-red-500'>Product Category is Required</p>}
         </div>
         </div>
+        {/* Image URL category */}
+        <div className="w-full" >
+          <label className="label">
+            <span className="label-text">Image URL</span>
+          </label>
+          <input type="text" placeholder="Image URL" className="w-full p-2 border border-black rounded-md" {
+            ...register('imageURL', {required:true})
+          } />
+          {errors.imageURL && <p className='text-sm font-light text-red-500'>Image URL Category is Required</p>}
+        </div>
+        
         <div className="w-full" >
           <label className="label">
             <span className="label-text">Product Description</span>
